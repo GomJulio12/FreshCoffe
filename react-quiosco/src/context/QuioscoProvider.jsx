@@ -1,5 +1,7 @@
-import { createContext, useState } from "react"
+import { createContext, useEffect, useState } from "react"
 import { categorias as categoriaDB } from "../data/categorias"
+
+import axios from  'axios' 
 
 
 const QuioscoContext = createContext();
@@ -11,6 +13,21 @@ const QuioscoProvider = ({children}) => {
     const [modal, setModal] = useState(false)
     const [producto, setProducto] = useState({})
     const [pedido, setPedido] = useState([])
+
+    // CONEXION CON LARAVEL 
+    const obtenerCategorias = async () => {
+        try {
+        const {data} = await axios('http://127.0.0.1:8000/api/categorias')
+        console.log(data.data)
+        } catch (error) {
+        console.log(error)
+        }
+    }
+
+    useEffect(() => {
+        obtenerCategorias();
+    }, [])
+
 
     const handleClickCategoria = id =>{
         const categoria = categorias.filter(categoria => categoria.id === id)[0]
@@ -25,6 +42,10 @@ const QuioscoProvider = ({children}) => {
         setProducto(producto)
     }
 
+    const handleAgregarPedido = ({categoria_id, imagen, ...producto}) => {
+        setPedido([...pedido, producto])
+    }
+
     return(
         <QuioscoContext.Provider
             value={{
@@ -35,7 +56,8 @@ const QuioscoProvider = ({children}) => {
                 handleClickModal,
                 producto,
                 handleSetProducto,
-                pedido
+                pedido,
+                handleAgregarPedido
             }}
 
         >{children}</QuioscoContext.Provider>

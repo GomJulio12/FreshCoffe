@@ -1,8 +1,8 @@
 import {useContext} from 'react'
 import QuioscoContext, {QuioscoProvider} from '../context/QuioscoProvider'
 
-const useQuisco = () => {
+const useQuiosco = () => {
     return useContext(QuioscoContext)
 }
 
-export default useQuisco
+export default useQuiosco
