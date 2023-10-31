@@ -3,7 +3,7 @@ import Modal from 'react-modal'
 import Sidebar from '../components/Sidebar'
 import Resumen from '../components/Resumen'
 import ModalProducto from '../components/ModalProducto'
-import useQuisco from '../hooks/useQuiosco'
+import useQuiosco from '../hooks/useQuiosco'
 
 const customStyles = {
   content: {
@@ -20,13 +20,14 @@ Modal.setAppElement('#root')
 
 export default function layout() {
 
-  const {modal, handleClickModal} = useQuisco();
+  const { modal , handleClickModal} = useQuiosco();
 
   console.log(modal)
 
   return (
     <>
       <div className='md:flex'> 
+
         <Sidebar />        
 
         <main className='flex-1 h-screen overflow-y-scroll bg-gray-100 p-3'>
@@ -39,10 +40,9 @@ export default function layout() {
       </div>
 
       
-        <Modal isOpen = {modal} style={customStyles}>
-          <ModalProducto/>
-        </Modal>
-
+      <Modal isOpen = {modal} style={customStyles}>
+        <ModalProducto />
+      </Modal>
     </>
   )
 }

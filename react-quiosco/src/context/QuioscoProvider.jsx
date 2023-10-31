@@ -7,7 +7,6 @@ import axios from  'axios'
 const QuioscoContext = createContext();
 
 const QuioscoProvider = ({children}) => {
-
     const [ categorias, setCategorias ] = useState(categoriaDB);
     const [categoriaActual, setCategoriaActual] = useState(categorias[0])
     const [modal, setModal] = useState(false)
@@ -15,18 +14,18 @@ const QuioscoProvider = ({children}) => {
     const [pedido, setPedido] = useState([])
 
     // CONEXION CON LARAVEL 
-    const obtenerCategorias = async () => {
-        try {
-        const {data} = await axios('http://127.0.0.1:8000/api/categorias')
-        console.log(data.data)
-        } catch (error) {
-        console.log(error)
-        }
-    }
+    // const obtenerCategorias = async () => {
+    //     try {
+    //     const {data} = await axios('http://127.0.0.1:8000/api/categorias')
+    //     console.log(data.data)
+    //     } catch (error) {
+    //     console.log(error)
+    //     }
+    // }
 
-    useEffect(() => {
-        obtenerCategorias();
-    }, [])
+    // useEffect(() => {
+    //     obtenerCategorias();
+    // }, [])
 
 
     const handleClickCategoria = id =>{

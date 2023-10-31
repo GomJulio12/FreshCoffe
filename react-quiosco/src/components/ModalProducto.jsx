@@ -4,7 +4,7 @@ import { formatearDinero } from "../helpers";
 
 export default function ModalProducto() {
 
-    const { producto, handleClickModal, handleAgregarPedido } = useQuiosco();
+    const {producto, handleClickModal, handleAgregarPedido} = useQuiosco();
     const [cantidad, setCantidad] = useState(1)
 
     console.log(producto)
@@ -21,8 +21,16 @@ export default function ModalProducto() {
             <div className="md:w-2/3">
                 <div className="flex justify-end">
                     <button onClick={handleClickModal}>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        <svg xmlns="http://www.w3.org/2000/svg" 
+                            fill="none" 
+                            viewBox="0 0 24 24" 
+                            strokeWidth={1.5} 
+                            stroke="currentColor" 
+                            className="w-6 h-6">
+                            <path strokeLinecap="round" 
+                            strokeLinejoin="round" 
+                            d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                             />
                         </svg>
                     </button>
                 </div>
@@ -41,8 +49,15 @@ export default function ModalProducto() {
                         if(cantidad <=1) return
                         setCantidad(cantidad -1);                    }}
                     >
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        <svg xmlns="http://www.w3.org/2000/svg" 
+                        fill="none" viewBox="0 0 24 24" 
+                        strokeWidth="1.5" 
+                        stroke="currentColor" 
+                        className="w-6 h-6">
+                            <path 
+                            strokeLinecap="round" 
+                            strokeLinejoin="round" 
+                            d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                     </button>
                     <p className="text-3xl">{cantidad}</p>
@@ -53,8 +68,15 @@ export default function ModalProducto() {
                         setCantidad(cantidad +1);
                     }}
                     >
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        <svg xmlns="http://www.w3.org/2000/svg" 
+                        fill="none" 
+                        viewBox="0 0 24 24" 
+                        strokeWidth="1.5" 
+                        stroke="currentColor" 
+                        className="w-6 h-6">
+                            <path strokeLinecap="round" 
+                            strokeLinejoin="round" 
+                            d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                     </button>
                 </div>
@@ -63,7 +85,10 @@ export default function ModalProducto() {
                     type="button"
                     className="bg-indigo-600 hover:bg-indigo-800 px-5 py-2 mt-5 text-white
                     font-bold uppercase rounded-xl"
-                    onClick={() => handleAgregarPedido({...producto, cantidad })}
+                    onClick={() => {
+                        handleAgregarPedido({...producto, cantidad })
+                        handleClickModal()
+                }}
                 >
                     Añadir al carrito
                 </button>

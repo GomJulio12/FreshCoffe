@@ -1,9 +1,9 @@
 import { formatearDinero } from "../helpers"
-import useQuisco from "../hooks/useQuiosco"
+import useQuiosco from "../hooks/useQuiosco"
 
 export default function Producto({producto}) {
     
-    const {handleClickModal, handleSetProducto} = useQuisco();
+    const {handleClickModal, handleSetProducto} = useQuiosco();
     const {nombre, imagen, precio} = producto
 
   return (
