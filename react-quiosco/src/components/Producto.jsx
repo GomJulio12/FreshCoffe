@@ -1,5 +1,5 @@
 import { formatearDinero } from "../helpers"
-import useQuiosco from "../hooks/useQuiosco"
+import useQuiosco from "../hooks/useQuiosco";
 
 export default function Producto({producto}) {
     

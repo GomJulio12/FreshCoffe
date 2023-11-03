@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from "react"
+import { toast } from "react-toastify";
 import { categorias as categoriaDB } from "../data/categorias"
 
 import axios from  'axios' 
@@ -6,12 +7,19 @@ import axios from  'axios'
 
 const QuioscoContext = createContext();
 
-const QuioscoProvider = ({children}) => {
+const QuioscoProvider = ({ children }) => {
     const [ categorias, setCategorias ] = useState(categoriaDB);
     const [categoriaActual, setCategoriaActual] = useState(categorias[0])
     const [modal, setModal] = useState(false)
     const [producto, setProducto] = useState({})
     const [pedido, setPedido] = useState([])
+    const [total, setTotal] = useState([0])
+
+    useEffect(() => {
+        const nuevoTotal = pedido.reduce((total, producto) => 
+        (producto.precio * producto.cantidad) + total, 0)
+        setTotal(nuevoTotal)
+    },[pedido])
 
     // CONEXION CON LARAVEL 
     // const obtenerCategorias = async () => {
@@ -41,8 +49,30 @@ const QuioscoProvider = ({children}) => {
         setProducto(producto)
     }
 
-    const handleAgregarPedido = ({categoria_id, imagen, ...producto}) => {
-        setPedido([...pedido, producto])
+    //REVISA SI EXISTE UN PRODUCTO PARA ACTUALIZAR Y NO CREAR OTRO PEDIDO NUEVO EN LE RESUMEN
+    const handleAgregarPedido = ({categoria_id, ...producto}) => {
+
+        if(pedido.some( pedidoState => pedidoState.id === producto.id )) {
+            const pedidoActualizado = pedido.map( pedidoState => pedidoState.id === 
+            producto.id ? producto : pedidoState)
+            setPedido(pedidoActualizado)
+            toast.success('Guardado Correctamente')
+        }else{
+            setPedido([...pedido, producto])
+            toast.success('Agregado al pedido')
+        }
+    }
+
+    const handleEditarCantidad = id => {
+        const productoActualizar = pedido.filter(producto => producto.id === id)[0]
+        setProducto(productoActualizar)
+        setModal(!modal);
+    }
+
+    const handleEliminarProductoPedido = id => {
+        const  pedidoActualizado = pedido.filter(producto => producto.id !== id )
+        setPedido(pedidoActualizado)
+        toast.success('Pedido Eliminado ')
     }
 
     return(
@@ -56,7 +86,10 @@ const QuioscoProvider = ({children}) => {
                 producto,
                 handleSetProducto,
                 pedido,
-                handleAgregarPedido
+                handleAgregarPedido,
+                handleEditarCantidad,
+                handleEliminarProductoPedido,
+                total
             }}
 
         >{children}</QuioscoContext.Provider>
