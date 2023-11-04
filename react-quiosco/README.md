@@ -29,6 +29,12 @@ npm install react-modal
 npm i react-toastify
 ```
 
+#### 
+```bash
+npm i swr
+```
+
+
 
 #### Para correr el programa (ejecutar) 
 ```bash

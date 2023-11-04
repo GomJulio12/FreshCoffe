@@ -1,15 +1,14 @@
 import { createContext, useEffect, useState } from "react"
 import { toast } from "react-toastify";
-import { categorias as categoriaDB } from "../data/categorias"
-
-import axios from  'axios' 
+// import { categorias as categoriaDB } from "../data/categorias"
+import clienteAxios from "../config/Axios";
 
 
 const QuioscoContext = createContext();
 
 const QuioscoProvider = ({ children }) => {
-    const [ categorias, setCategorias ] = useState(categoriaDB);
-    const [categoriaActual, setCategoriaActual] = useState(categorias[0])
+    const [ categorias, setCategorias ] = useState([]);
+    const [categoriaActual, setCategoriaActual] = useState({})
     const [modal, setModal] = useState(false)
     const [producto, setProducto] = useState({})
     const [pedido, setPedido] = useState([])
@@ -22,18 +21,20 @@ const QuioscoProvider = ({ children }) => {
     },[pedido])
 
     // CONEXION CON LARAVEL 
-    // const obtenerCategorias = async () => {
-    //     try {
-    //     const {data} = await axios('http://127.0.0.1:8000/api/categorias')
-    //     console.log(data.data)
-    //     } catch (error) {
-    //     console.log(error)
-    //     }
-    // }
+    const obtenerCategorias = async () => {
+        try {
+            
+        const {data} = await clienteAxios('/api/categorias') //Categorias obtenido desde laravel
+        setCategorias(data.data)
+        setCategoriaActual(data.data[0])
+        } catch (error) {
+        console.log(error)
+        }
+    }
 
-    // useEffect(() => {
-    //     obtenerCategorias();
-    // }, [])
+    useEffect(() => {
+        obtenerCategorias();
+    }, [])
 
 
     const handleClickCategoria = id =>{
